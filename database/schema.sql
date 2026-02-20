@@ -27,10 +27,10 @@ CREATE TABLE tasks (
     description TEXT, 
     status ENUM('todo', 'in_progress', 'done') NOT NULL,
     priority ENUM('low', 'medium', 'high') NOT NULL,
-    projects_id CHAR(36) NOT NULL,
+    project_id CHAR(36) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (projects_id) REFERENCES projects(id)
+    FOREIGN KEY (project_id) REFERENCES projects(id)
 );
 
 CREATE TABLE project_members (
