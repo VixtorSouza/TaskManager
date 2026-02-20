@@ -1,6 +1,6 @@
 import connection from "../config/database.js"; // conecta com o banco de dados
 
-export class UserModel {
+export class User {
     // Busca o usuario pelo email
     static async FindUserByEmail({ email }) {
         if (email) {
