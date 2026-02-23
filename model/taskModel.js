@@ -1,6 +1,6 @@
 import connection from "../config/database"
 
-export class Task {
+export class taskModel {
     // criar task, precisa de title, description, status, priority, project_id
     static async createTask(taskData) {
         const { id, title, description, status, priority, project_id } = taskData

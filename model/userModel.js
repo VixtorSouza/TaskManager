@@ -1,6 +1,6 @@
 import connection from "../config/database.js"; // conecta com o banco de dados
 
-export class User {
+export class userModel {
     // Busca o usuario pelo email
     static async FindUserByEmail({ email }) {
         if (email) {
@@ -40,6 +40,22 @@ export class User {
             return users[0];
         }
     }
+    static async FindUserById({ id }) {
+        if (id) {
+            const [users] = await connection.query(
+                `
+            SELECT * FROM users WHERE id = ?
+            `,
+                [id]
+            )
+
+            if (users.length === 0) {
+                return null;
+            }
+
+            return users[0];
+        }
+    }
 
     // Busca todos os usuarios
     static async getAllUsers() {
@@ -49,7 +65,7 @@ export class User {
         return users; // return all
     }
     // quando a pessoa for se registrar
-    static async createUser({ name, email, passwordHash }) {
+    static async createUser({ name, email, passwordHash, id }) {
 
         if (!name || !email || !passwordHash) {
             return null;
@@ -57,9 +73,9 @@ export class User {
         // insert datas
         await connection.query(
             `
-            INSERT INTO users(name,email, password_hash) VALUES(?,?,?)
+            INSERT INTO users(id,name,email, password_hash) VALUES(?,?,?,?)
             `,
-            [name, email, passwordHash]
+            [id, name, email, passwordHash]
         );
 
         // search and return user created
@@ -80,7 +96,7 @@ export class User {
 
         // return
         const [users] = await connection.query(
-            'SELECT id,name, email, created_at FROM users WHERE = ?',
+            'SELECT id,name, email, created_at FROM users WHERE id = ?',
             [id]
         );
         return users[0]
