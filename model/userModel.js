@@ -48,7 +48,7 @@ export class User {
         )
         return users; // return all
     }
-
+    // quando a pessoa for se registrar
     static async createUser({ name, email, passwordHash }) {
 
         if (!name || !email || !passwordHash) {
