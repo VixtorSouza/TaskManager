@@ -1,6 +1,6 @@
 import { userModel } from "../models/userModel";
 
-export class User {
+export class userController {
     static async getMe(req, res, next) {
         try {
             const id = req.user.id
@@ -30,13 +30,11 @@ export class User {
         try {
             const id = req.user.id
             const { name, email } = req.body
-            if (id === req.params.id) {
-                await userModel.updateUser({ id, name, email })
-                return // irei deixarpara depois 
-            }
             if (req.params.id !== id) {
-                req.status(403).json({ error: "ID invalido!" })
+                return res.status(403).json({ error: "ID invalido!" })
             }
+            const user = await userModel.updateUser({ id, name, email })
+            return res.status(200).json(user)
 
         } catch (err) {
             next(err)
@@ -46,13 +44,13 @@ export class User {
         try {
             const id = req.user.id
             const deleteID = req.params.id
-            if (id === deleteID) {
-                await userModel.deleteID({ id })
-                return res.status(200).json({ message: "Sucess delete" })
-            }
             if (deleteID !== id) {
-                res.status(403).json({ error: "erro, deletar  usuario" })
+                return res.status(403).json({ error: "erro, deletar  usuario" })
             }
+            const user = await userModel.deleteUser({ id })
+            return res.status(200).json({ message: "Sucess delete" })
+
+
 
         } catch (err) {
             next(err)
