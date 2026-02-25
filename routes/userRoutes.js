@@ -1,6 +1,6 @@
 import express from "express"
-import { userController } from "../controllers/userController"
-import { verifyToken } from "../middlewares/authMiddleware"
+import { userController } from "../controllers/userController.js"
+import { verifyToken } from "../middlewares/authMiddleware.js"
 
 
 // criando rota 

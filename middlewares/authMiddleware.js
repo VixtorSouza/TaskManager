@@ -2,10 +2,10 @@ import jwt from "jsonwebtoken";
 
 
 export const verifyToken = (req, res, next) => {
-    const token = req.headers.authorization?.split()[1] || req.cookies.token; // pega o token de dentro da req no header o ? é caso não tenha nada manda nada o outro procura nos cookies
+    const token = req.headers.authorization?.split(" ")[1] || req.cookies?.token; // pega o token de dentro da req no header o ? é caso não tenha nada manda nada o outro procura nos cookies
     // Se o token não for encontrado
     if (!token) {
-        res.status(401).json({ error: "token não fornecido!" })
+        return res.status(401).json({ error: "token não fornecido!" })
     }
     // Agora um try catch
 

@@ -1,4 +1,4 @@
-import connection from "../config/database"
+import connection from "../config/database.js"
 
 export class taskModel {
     // criar task, precisa de title, description, status, priority, project_id

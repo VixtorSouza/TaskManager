@@ -1,6 +1,6 @@
-import { userModel } from "../model/userModel";
+import { userModel } from "../model/userModel.js";
 import bcrypt from "bcrypt";
-import { v7 as uuidv7 } from "uuid";
+import { uuidv7 } from "uuidv7";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
 
@@ -21,7 +21,7 @@ export class authController {
             const passwordHash = await bcrypt.hash(password, 10);
             const id = uuidv7();
             // criando o o usuario no banco de dados
-            const userCreated = await userModel.createUser({ name, email, passwordHash });
+            const userCreated = await userModel.createUser({ name, email, passwordHash, id });
             res.status(201).json({
                 message: "Sucess", userCreated: {
                     name,
@@ -46,7 +46,7 @@ export class authController {
                 res.status(400).json({ error: "Todos os campos são obrigatórios" })
                 return;
             }
-            const user = userModel.FindUserByEmail({ email });
+            const user = await userModel.FindUserByEmail({ email });
             if (!user) {
                 res.status(404).json({ error: "Usuario nao encontrado" })
                 return;
@@ -63,7 +63,7 @@ export class authController {
                 secure: false,  // Coloque 'true' quando tiver HTTPS (produção), preciso lembrar
                 maxAge: 3600000 // 1 hora em milissegundos
             });
-            res.status(200).json({ message: "Sucess", user: { name, email, id: user.id } })
+            res.status(200).json({ message: "Sucess", user: { name: user.name, email: user.email, id: user.id } })
             return token;
 
         } catch (err) {

@@ -1,9 +1,7 @@
 import 'dotenv/config'
 import express from "express";
 import userRoutes from "./routes/userRoutes.js"; // gerenciar usuarios, CRUD completo
-//import taskRoutes from "./routes/taskRoutes.js"; // gerenciar tarefas
-//import projectRoutes from "./routes/projectRoutes.js"; // gerenciar projetos
-import { authRoutes } from "./routes/authRoutes.js"
+import authRoutes from "./routes/authRoutes.js"
 import { errorHandler } from "./middlewares/errorHandles.js"
 
 

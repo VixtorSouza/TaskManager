@@ -88,7 +88,7 @@ export class userModel {
     }
     // Atualiza o usuario(todos os dados)
     static async updateUser({ id, name, email }) {
-        const [input] = await connection.query(
+        const [result] = await connection.query(
             'UPDATE users SET name= ?, email = ? WHERE id  = ?',
             [name, email, id]
         );
