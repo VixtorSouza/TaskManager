@@ -13,7 +13,13 @@ export const verifyToken = (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
         req.user = decoded
         next()
-    } catch {
+    } catch (error) {
+        console.error("Erro na verificação do token:", error.message)
+
+        if (error.name === 'TokenExpiredError') {
+            return res.status(401).json({ error: "Token expirado!" })
+        }
+
         return res.status(401).json({ error: "Token invalido!" })
     }
 

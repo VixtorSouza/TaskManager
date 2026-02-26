@@ -63,8 +63,7 @@ export class authController {
                 secure: false,  // Coloque 'true' quando tiver HTTPS (produção), preciso lembrar
                 maxAge: 3600000 // 1 hora em milissegundos
             });
-            res.status(200).json({ message: "Sucess", user: { name: user.name, email: user.email, id: user.id } })
-            return token;
+            res.status(200).json({ message: "Sucess", token: token, user: { name: user.name, email: user.email, id: user.id } })
 
         } catch (err) {
             next(err)
