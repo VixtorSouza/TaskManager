@@ -18,4 +18,24 @@ export class taskController {
             return res.status(500).json({ error: "Erro interno do servidor" })
         }
     }
+    static async getAllTasks(req, res) {
+        try {
+            const tasks = await taskModel.getAllTasks() // não preciso enviar nada
+            return res.status(200).json(tasks)
+        } catch (error) {
+            console.error("Erro ao buscar tasks:", error.message)
+            return res.status(500).json({ error: "Erro interno do servidor" })
+        }
+    }
+    static async getTaskID(req, res) {
+        try {
+            // pego o id com req.params, pois o que a pessoa digitar vai aparecer na url e enviar para o servidor 
+            const { id } = req.params // salvo aqui
+            const task = await taskModel.getTaskID(id) // enviado para o model para buscar no banco de dados
+            return res.status(200).json(task) // retorno do servidor
+        } catch (error) {
+            console.error("Erro ao buscar task:", error.message)
+            return res.status(500).json({ error: "Erro interno do servidor" })
+        }
+    }
 }
