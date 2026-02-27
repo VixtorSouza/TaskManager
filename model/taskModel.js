@@ -6,7 +6,7 @@ export class taskModel {
         const { id, title, description, status, priority, project_id } = taskData
 
         await connection.query(
-            'INSERT INTO tasks (id,title,description, status, priority,project_id) VALUE (?,?,?,?,?)',
+            'INSERT INTO tasks (id,title,description, status, priority,project_id) VALUE (?,?,?,?,?, ?)',
             [id, title, description, status, priority, project_id]
         );
 
@@ -68,7 +68,7 @@ export class taskModel {
     }
 
     static async deleteTask(id) {
-        await connection.query(
+        const [result] = await connection.query(
             'DELETE FROM tasks WHERE id = ? ',
             [id]
         )
