@@ -1,6 +1,6 @@
 import connection from "../config/db.js";
 
-export class Project {
+export class projectModel {
     static async createProject(id, name, description, ownerId) {
         await connection.query(
             'INSERT INTO projects (id, name, description, owner_id) VALUES (?, ?, ?, ?)',
