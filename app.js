@@ -12,17 +12,28 @@ const app = express()
 const PORT = process.env.PORT ?? 3000; // essencial para rodar em qualquer lugar
 
 // cuidar para deixar em formato json e enviar para as rotas
+app.use(cors({
+  origin: process.env.FRONTEND_URL ?? 'http://localhost:5173', // URL do seu frontend
+  credentials: true  // ← obrigatório para cookies trafegarem
+}));
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.static('web'))
+
+
 app.use("/auth", authRoutes)
 app.use("/users", userRoutes);
 app.use("/task", taskRoutes);
 app.use("/projects", projectsRoutes);
 
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`)
-})
 // DEPOIS de todas as rotas:
 app.use(errorHandler);  // ← sempre por último!
-// pega os erros nas rotas 
+// pega os erros nas rotas
+
+
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`)
+})
+
