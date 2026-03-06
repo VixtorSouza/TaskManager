@@ -61,7 +61,8 @@ export class authController {
             res.cookie('token', token, {
                 httpOnly: true, // O front-end não consegue ler/roubar via script
                 secure: false,  // Coloque 'true' quando tiver HTTPS (produção), preciso lembrar
-                maxAge: 3600000 // 1 hora em milissegundos
+                maxAge: 3600000, // 1 hora em milissegundos
+                sameSite: 'strict' // Protege de CSRF
             });
             res.status(200).json({ message: "Sucess", token: token, user: { name: user.name, email: user.email, id: user.id } })
 
