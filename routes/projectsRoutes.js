@@ -2,15 +2,15 @@ import express from "express";
 import { projectController } from "../controllers/projectsController.js";
 
 
-const router = express.Router()
+const Router = express.Router()
 
-router.get("/", projectController.getAllProjects)
-router.get("/:id", projectController.getProjectID)
-router.post("/", projectController.create)
-router.put("/:id", projectController.updateProject)
-router.delete("/:id", projectController.deleteProject)
-router.post("/:projectId/members", projectController.addMember)
-router.delete("/:projectId/members/:userId", projectController.removeMember)
-router.get("/:projectId/members", projectController.getMembers)
+Router.get("/", projectController.getAllProjects)
+Router.get("/:id", projectController.getProjectById)
+Router.post("/", projectController.createProject)
+Router.put("/:id", projectController.updateProject)
+Router.delete("/:id", projectController.deleteProject)
+Router.post("/:projectId/members", projectController.addMember)
+Router.delete("/:projectId/members/:userId", projectController.removeMember)
+Router.get("/:projectId/members", projectController.getMembers)
 
-export default router
+export default Router

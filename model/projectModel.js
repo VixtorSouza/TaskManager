@@ -1,4 +1,4 @@
-import connection from "../config/db.js";
+import connection from "../config/database.js";
 
 export class projectModel {
     static async createProject(id, name, description, ownerId) {

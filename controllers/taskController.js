@@ -1,4 +1,4 @@
-import { taskModel } from "../model/taskModel"
+import { taskModel } from "../model/taskModel.js"
 
 
 export class taskController {
