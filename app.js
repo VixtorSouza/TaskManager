@@ -2,6 +2,7 @@ import 'dotenv/config'
 import express from "express";
 import userRoutes from "./routes/userRoutes.js"; // gerenciar usuarios, CRUD completo
 import authRoutes from "./routes/authRoutes.js"
+import projectsRoutes from "./routes/projectsRoutes.js"
 import cookieParser from "cookie-parser";
 import { errorHandler } from "./middlewares/errorHandles.js"
 
@@ -15,6 +16,7 @@ app.use(cookieParser());
 app.use("/auth", authRoutes)
 app.use("/users", userRoutes);
 app.use("/task", taskRoutes);
+app.use("/projects", projectsRoutes);
 
 
 app.listen(PORT, () => {
