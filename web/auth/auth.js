@@ -2,9 +2,9 @@
 
 const register = document.querySelector("#registerForm")
 const login = document.querySelector("#loginForm")
+const logout = document.querySelector("#logoutBtn")
 
-
-
+if(register){
 register.addEventListener("submit", async (e) => {
     e.preventDefault() // impedir de carregar a pagina
 
@@ -31,7 +31,7 @@ register.addEventListener("submit", async (e) => {
         console.log(data)
         if(response.ok){
             alert("Usuario cadastrado com sucesso")
-            window.location.href = "/"
+            window.location.href = "/auth/authLogin.html"
         }else{
             alert("Erro ao cadastrar usuario:" + data.message)
         }
@@ -40,7 +40,9 @@ register.addEventListener("submit", async (e) => {
         console.log(error)
     }
 }) 
+}
 
+if(login){
 login.addEventListener("submit", async (e) => {
     e.preventDefault()
 
@@ -61,16 +63,22 @@ login.addEventListener("submit", async (e) => {
         })
         const data = await response.json()
         console.log(data)
-        if(response.ok){
+        if(response.ok && data.token){
             alert("Usuario logado com sucesso")
-            window.location.href = "/"
-            if(data.token){
-                localStorage.setItem("token", data.token)
-            }
+            window.location.href = "/auth/dashboard.html"
+            localStorage.setItem("token", data.token)
         }else{
-            console.log("erro no login")
+            alert("Erro no login: " + data.message)
         }
     }catch( error){
         console.log("erro de conexão", error)
     }
     })
+}
+
+if(logout){
+    logout.addEventListener("click", () => {
+        localStorage.removeItem("token")
+        window.location.href = "/index.html"
+    })
+}
