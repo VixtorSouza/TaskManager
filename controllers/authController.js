@@ -9,10 +9,7 @@ export class authController {
         try {
             const { name, email, password } = req.body;
             console.log(name, email, password, "dados veio")
-            if (!name || !email || !password) {
-                res.status(400).json({ error: "Todos os campos são obrigatórios" })
-                return;
-            }
+            
             const user = await userModel.FindUserByEmail({ email });
             if (user) {
                 res.status(409).json({ error: "Email já cadastrado" })
@@ -42,10 +39,7 @@ export class authController {
     static async login(req, res, next) {
         try {
             const { email, password } = req.body;
-            if (!email || !password) {
-                res.status(400).json({ error: "Todos os campos são obrigatórios" })
-                return;
-            }
+            
             const user = await userModel.FindUserByEmail({ email });
             if (!user) {
                 res.status(404).json({ error: "Usuario nao encontrado" })

@@ -1,11 +1,13 @@
 import 'dotenv/config'
 import express from "express";
+import cors from "cors";
 import userRoutes from "./routes/userRoutes.js"; // gerenciar usuarios, CRUD completo
 import authRoutes from "./routes/authRoutes.js"
 import projectsRoutes from "./routes/projectsRoutes.js"
 import taskRoutes from "./routes/taskRoutes.js"
 import cookieParser from "cookie-parser";
 import { errorHandler } from "./middlewares/errorHandles.js"
+
 
 
 const app = express()

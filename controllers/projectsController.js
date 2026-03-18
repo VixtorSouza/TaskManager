@@ -1,5 +1,5 @@
 import { projectModel } from "../model/projectModel.js";
-
+// onde eu recebo as requisições e envio para o model e faço algumas validações antes de enviar para o model
 export class projectController {
     static async createProject(req, res) {
         try {

@@ -1,5 +1,6 @@
 import connection from "../config/database.js";
-
+// onde eu conecto e passo as querys sql para o banco de dados
+//  onde eu crio as funções que vão ser usadas nas rotas e são passados do controller
 export class projectModel {
     static async createProject(id, name, description, ownerId) {
         await connection.query(

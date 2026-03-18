@@ -15,10 +15,26 @@ const loginSchema = z.object({
 
 const taskSchema = z.object({
     title: z.string().min(1, "insira um titulo!"),
-    description: z.string(),
-    status: z.enum(["todo", "in_progress", "done"]),
-    priority: z.enum(["low", "medium", "high"]),
+    description: z.string().optional(),
+    status: z.enum(["todo", "in_progress", "done"]).optional(),
+    priority: z.enum(["low", "medium", "high"]).optional(),
     project_id: z.string().uuid("id do projeto invalido!")
+})
+
+const projectSchema = z.object({
+    name: z.string().min(1, "insira o nome do projeto!"),
+    description: z.string().optional(),
+    ownerId: z.string().uuid("id do dono invalido!").optional()
+})
+
+const memberSchema = z.object({
+    userId: z.string().uuid("id do usuario invalido!"),
+    role: z.enum(["admin", "member"]).optional()
+})
+
+const userUpdateSchema = z.object({
+    name: z.string().min(1, "insira um nome!").optional(),
+    email: z.string().email("email invalido!").optional()
 })
 
 const validate = (schema) => (req, res, next) => {
@@ -31,4 +47,4 @@ const validate = (schema) => (req, res, next) => {
 }
 
 
-export { loginSchema, registerSchema, taskSchema }
+export { validate, loginSchema, registerSchema, taskSchema, projectSchema, memberSchema, userUpdateSchema }

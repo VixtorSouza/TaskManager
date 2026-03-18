@@ -1,17 +1,18 @@
 import express from "express";
 import { projectController } from "../controllers/projectsController.js";
 import { verifyToken } from "../middlewares/authMiddleware.js";
+import { validate, projectSchema, memberSchema } from "../middlewares/validation.js";
 
 
-const Router = express.Router()
+const router = express.Router()
 
-Router.get("/", verifyToken, projectController.getAllProjects)
-Router.get("/:id", verifyToken, projectController.getProjectById)
-Router.post("/", verifyToken, projectController.createProject)
-Router.put("/:id", verifyToken, projectController.updateProject)
-Router.delete("/:id", verifyToken, projectController.deleteProject)
-Router.post("/:projectId/members", verifyToken, projectController.addMember)
-Router.delete("/:projectId/members/:userId", verifyToken, projectController.removeMember)
-Router.get("/:projectId/members", verifyToken, projectController.getMembers)
+router.get("/", verifyToken, projectController.getAllProjects)
+router.get("/:id", verifyToken, projectController.getProjectById)
+router.post("/", verifyToken, validate(projectSchema), projectController.createProject)
+router.put("/:id", verifyToken, validate(projectSchema.partial()), projectController.updateProject)
+router.delete("/:id", verifyToken, projectController.deleteProject)
+router.post("/:projectId/members", verifyToken, validate(memberSchema), projectController.addMember)
+router.delete("/:projectId/members/:userId", verifyToken, projectController.removeMember)
+router.get("/:projectId/members", verifyToken, projectController.getMembers)
 
-export default Router
+export default router
