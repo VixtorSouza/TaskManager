@@ -7,10 +7,13 @@ import projectsRoutes from "./routes/projectsRoutes.js"
 import taskRoutes from "./routes/taskRoutes.js"
 import cookieParser from "cookie-parser";
 import { errorHandler } from "./middlewares/errorHandles.js"
-
+import http from 'http';
+import { initSocket } from './socket/socketHandler.js';
 
 
 const app = express()
+const server = http.createServer(app);
+export const io = initSocket(server);
 const PORT = process.env.PORT ?? 3000; // essencial para rodar em qualquer lugar
 
 // cuidar para deixar em formato json e enviar para as rotas

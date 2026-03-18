@@ -1,13 +1,14 @@
 import { taskModel } from "../model/taskModel.js"
+import { io } from "../app.js"
 
 
 export class taskController {
     static async create(req, res) {
         try {
             const { id, title, description, status, priority, project_id } = req.body
-            
-            const task = await taskModel.createTask(req.body)
 
+            const task = await taskModel.createTask(req.body)
+            io.to(project_id).emit("task_created", task) // envio para todos os clientes conectados no projeto
             return res.status(201).json(task)
 
         } catch (error) {
@@ -49,7 +50,8 @@ export class taskController {
     static async updateTask(req, res) {
         try {// denovvo pego pela url
             const { id } = req.params
-            const task = await taskModel.updateTask(id, req.body) // envio para o updateTask req,body, onde é destruturado pelo model e enviado ao banco de dados
+            const task = await taskModel.updateTask(id, req.body) // envio para o updateTask req,body, onde é destruturado pelo model e enviado ao banco de dados 
+            io.to(task.project_id).emit("task_updated", task) // envio para todos os clientes conectados no projeto
             return res.status(200).json({ message: "Task atualizada com sucesso", task }) // retorna o que está no banco de dados
         } catch (error) {
             console.error("Erro ao atualizar task:", error.message)
@@ -61,6 +63,7 @@ export class taskController {
             const { id } = req.params
             const { status } = req.body
             const AtualizandoTask = await taskModel.updateTaskStatus(id, status)
+            io.to(AtualizandoTask.project_id).emit("task_status_updated", AtualizandoTask) // envio para todos os clientes conectados no projeto
             return res.status(200).json({ message: "Task atualizada com sucesso", AtualizandoTask })
         } catch (error) {
             console.error("Erro ao atualizar task:", error.message)
@@ -71,6 +74,7 @@ export class taskController {
         try {
             const { id } = req.params
             const DeletandoTask = await taskModel.deleteTask(id)
+            io.to(DeletandoTask.project_id).emit("task_deleted", DeletandoTask) // envio para todos os clientes conectados no projeto
             return res.status(200).json({ message: "Task deletada com sucesso", DeletandoTask })
         } catch (error) {
             console.error("Erro ao deletar task:", error.message)
