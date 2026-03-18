@@ -71,6 +71,6 @@ login.addEventListener("submit", async (e) => {
             console.log("erro no login")
         }
     }catch( error){
-        console.log("erro de conexão")
+        console.log("erro de conexão", error)
     }
     })
