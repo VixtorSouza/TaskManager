@@ -1,16 +1,19 @@
 import { projectModel } from "../model/projectModel.js";
+import { uuidv7 } from "uuidv7";
 // onde eu recebo as requisições e envio para o model e faço algumas validações antes de enviar para o model
 export class projectController {
     static async createProject(req, res) {
         try {
-            const { id, name, description, ownerId } = await req.body//passando todos os campos preenchidos do req que veio de um formulario ou algo assim e colocado no corpo da requisição
+            const id = uuidv7()
+            const { name, description } = req.body//passando todos os campos preenchidos do req que veio de um formulario ou algo assim e colocado no corpo da requisição
+            const ownerId = req.user.id
             const createdProject = await projectModel.createProject(id, name, description, ownerId) // envio para o model
             return res.status(201).json({ message: "Projeto criado com sucesso", createdProject })
         } catch (error) {
             return res.status(500).json({ message: "Erro ao criar projeto", error })
         }
     }
-    static async getAllProjects() {
+    static async getAllProjects(req, res) {
         try {
             const allProjects = await projectModel.getAllProjects()
             return res.status(200).json(allProjects)

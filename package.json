@@ -10,10 +10,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js",
     "start": "node app.js",
-    "db:check": "sudo systemctl is-active mariadb || npm run db:start",
-    "full": "npm run db:check && npm run dev",
-    "db:start": "sudo systemctl start mariadb",
-    "db:stop": "sudo systemctl stop mariadb"
+    "db:check": "brew services info mariadb || npm run db:start",
+    "full": "npm run db:start && npm run dev",
+    "db:start": "brew services start mariadb",
+    "db:stop": "brew services stop mariadb"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
