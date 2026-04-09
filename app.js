@@ -38,7 +38,7 @@ app.use(errorHandler);  // ← sempre por último!
 
 
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
 })
 
