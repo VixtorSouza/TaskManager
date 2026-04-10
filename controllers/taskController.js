@@ -1,13 +1,15 @@
 import { taskModel } from "../model/taskModel.js"
 import { io } from "../app.js"
-
+import { uuidv7 } from "uuidv7"
 
 export class taskController {
     static async create(req, res) {
         try {
-            const { id, title, description, status, priority, project_id } = req.body
+            const id = uuidv7()
+            const { title, description, status, priority, project_id } = req.body
 
-            const task = await taskModel.createTask(req.body)
+
+            const task = await taskModel.createTask({ id, title, description, status, priority, project_id })
             io.to(project_id).emit("task_created", task) // envio para todos os clientes conectados no projeto
             return res.status(201).json(task)
 
